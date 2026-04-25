@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bird Sketches</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐦</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f5f0e8;
+    --ink: #2c2416;
+    --ink-light: #7a6a52;
+    --accent: #8b6f47;
+    --shadow: rgba(44, 36, 22, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--paper);
+    background-image:
+      url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    font-family: 'Caveat', cursive;
+    color: var(--ink);
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  h1 {
+    font-family: 'IM Fell English SC', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+    color: var(--ink-light);
+    margin-top: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+
+  .divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    margin: 1rem auto 0;
+  }
+
+  .frame {
+    position: relative;
+    width: min(520px, 92vw);
+  }
+
+  /* Paper card with torn-edge shadow */
+  .card {
+    background: #fdfaf4;
+    border: 1px solid #d9cdb8;
+    box-shadow:
+      2px 3px 0 #d9cdb8,
+      4px 6px 0 #cfc3af,
+      0 20px 60px var(--shadow);
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(139, 111, 71, 0.15);
+    pointer-events: none;
+  }
+
+  .img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.35s ease;
+  }
+
+  .img-wrap img.fade-out { opacity: 0; }
+
+  /* Corner tape pieces */
+  .tape {
+    position: absolute;
+    width: 38px;
+    height: 14px;
+    background: rgba(210, 195, 165, 0.55);
+    transform: rotate(-8deg);
+    z-index: 2;
+  }
+  .tape.tl { top: -5px; left: 18px; transform: rotate(-6deg); }
+  .tape.tr { top: -5px; right: 18px; transform: rotate(6deg); }
+  .tape.bl { bottom: -5px; left: 18px; transform: rotate(4deg); }
+  .tape.br { bottom: -5px; right: 18px; transform: rotate(-4deg); }
+
+  .counter {
+    text-align: right;
+    font-size: 1rem;
+    color: var(--ink-light);
+    margin-top: 0.75rem;
+    padding-right: 0.25rem;
+    min-height: 1.4em;
+  }
+
+  .btn-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  button {
+    font-family: 'Caveat', cursive;
+    font-size: 1.35rem;
+    color: var(--paper);
+    background: var(--ink);
+    border: none;
+    padding: 0.7rem 2.4rem;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    position: relative;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow: 3px 3px 0 var(--accent);
+  }
+
+  button:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--accent);
+  }
+
+  button:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--accent);
+  }
+
+  footer {
+    margin-top: 3rem;
+    font-size: 1rem;
+    color: var(--ink-light);
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Bird Sketches</h1>
+  <p class="subtitle">a small field notebook</p>
+  <div class="divider"></div>
+</header>
+
+<div class="frame">
+  <div class="tape tl"></div>
+  <div class="tape tr"></div>
+  <div class="tape bl"></div>
+  <div class="tape br"></div>
+  <div class="card">
+    <div class="img-wrap">
+      <img id="sketch" src="" alt="bird sketch">
+    </div>
+  </div>
+  <div class="counter" id="counter"></div>
+</div>
+
+<div class="btn-wrap">
+  <button onclick="nextSketch()">✦ draw another</button>
+</div>
+
+<footer>click to meet a new bird</footer>
+
+<script>
+  const images = [
+    "images/1777123909318.png",
+    "images/1777124052039.png",
+    "images/1777124134065.png",
+    "images/1777124232457.png",
+    "images/1777125103567.png",
+    "images/1777125256640.png",
+    "images/1777125327479.png",
+    "images/1777125390260.png",
+    "images/1777125484731.png",
+    "images/1777125612669.png",
+    "images/1777125737158.png",
+    "images/1777126050927.png",
+    "images/1777126598586.png",
+    "images/1777126706209.png",
+    "images/1777126964376.png",
+    "images/1777127352367.png"
+  ];
+
+  let current = -1;
+
+  function nextSketch() {
+    let next;
+    do { next = Math.floor(Math.random() * images.length); }
+    while (next === current && images.length > 1);
+    current = next;
+
+    const img = document.getElementById('sketch');
+    img.classList.add('fade-out');
+
+    setTimeout(() => {
+      img.src = images[current];
+      img.onload = () => img.classList.remove('fade-out');
+    }, 350);
+
+    document.getElementById('counter').textContent =
+      `№ ${current + 1} of ${images.length}`;
+  }
+
+  // Show one on load
+  nextSketch();
+</script>
+</body>
+</html>
