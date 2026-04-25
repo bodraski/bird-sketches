@@ -186,7 +186,7 @@
 </div>
 
 <div class="btn-wrap">
-  <button onclick="nextSketch()">✦ draw another</button>
+  <button onclick="nextSketch()">✦ next bird</button>
 </div>
 
 <footer>click to meet a new bird</footer>
@@ -214,10 +214,7 @@
   let current = -1;
 
   function nextSketch() {
-    let next;
-    do { next = Math.floor(Math.random() * images.length); }
-    while (next === current && images.length > 1);
-    current = next;
+    current = (current + 1) % images.length;
 
     const img = document.getElementById('sketch');
     img.classList.add('fade-out');
