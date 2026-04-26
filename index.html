@@ -130,6 +130,7 @@
     display: flex;
     justify-content: center;
     margin-top: 2rem;
+    gap: 1rem;
   }
 
   button {
@@ -186,10 +187,11 @@
 </div>
 
 <div class="btn-wrap">
+  <button onclick="prevSketch()">✦ previous bird</button>
   <button onclick="nextSketch()">✦ next bird</button>
 </div>
 
-<footer>click to meet a new bird</footer>
+<footer>Click to meet a new bird</footer>
 
 <script>
   const images = [
@@ -211,7 +213,6 @@
     "1777127352367.png",
     "1777192041373.png",
     "1777192138507.png",
-    "1777192209277.png",
     "1777192270227.png",
     "1777192412388.png",
     "1777192550664.png"
@@ -233,6 +234,22 @@
     document.getElementById('counter').textContent =
       `№ ${current + 1} of ${images.length}`;
   }
+
+  function prevSketch() {
+    current = (current - 1 + images.length) % images.length;
+
+    const img = document.getElementById('sketch');
+    img.classList.add('fade-out');
+
+    setTimeout(() => {
+      img.src = images[current];
+      img.onload = () => img.classList.remove('fade-out');
+    }, 350);
+
+    document.getElementById('counter').textContent =
+      `№ ${current + 1} of ${images.length}`;
+  }
+  
 
   // Show one on load
   nextSketch();
