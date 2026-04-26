@@ -187,7 +187,8 @@
 </div>
 
 <div class="btn-wrap">
-  <button onclick="prevSketch()">✦ prev bird</button>
+  <button onclick="prevSketch()">✦ previous bird</button>
+  <button onclick="randomSketch()">✦ random bird</button>
   <button onclick="nextSketch()">✦ next bird</button>
 </div>
 
@@ -246,6 +247,24 @@
       img.onload = () => img.classList.remove('fade-out');
     }, 350);
 
+    document.getElementById('counter').textContent =
+      `№ ${current + 1} of ${images.length}`;
+  }
+
+  function randomSketch() {
+    let next;
+    do { next = Math.floor(Math.random() * images.length); }
+    while (next === current && images.length > 1);
+    current = next;
+  
+    const img = document.getElementById('sketch');
+    img.classList.add('fade-out');
+  
+    setTimeout(() => {
+      img.src = images[current];
+      img.onload = () => img.classList.remove('fade-out');
+    }, 350);
+  
     document.getElementById('counter').textContent =
       `№ ${current + 1} of ${images.length}`;
   }
